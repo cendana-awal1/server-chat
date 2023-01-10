@@ -12,7 +12,9 @@ const openai = new OpenAIApi(configration);
 // console.log(process.env.OPENAI_KEY);
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: "*",
+  }));
 app.use(express.json());
 
 app.post("/", async (req, res) => {
