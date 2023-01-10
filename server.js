@@ -12,12 +12,15 @@ const openai = new OpenAIApi(configration);
 // console.log(process.env.OPENAI_KEY);
 
 const app = express();
-const corsOpt = {
-    origin: process.env.CORS_ALLOW_ORIGIN || '*', // this work well to configure origin url in the server
-    methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'], // to works well with web app, OPTIONS is required
-    allowedHeaders: ['Content-Type', 'Authorization'] // allow json and token in the headers
-};
-app.use(cors(corsOpt));
+// Add Access Control Allow Origin headers
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,PATCH,DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+ 
+  next();
+});
+app.use(cors());
 app.use(express.json());
 
 app.post("/", async (req, res) => {
